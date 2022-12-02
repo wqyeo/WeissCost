@@ -1,0 +1,18 @@
+Dabtenshi
+Characters 
+LSS/WE27-E03	4	"MIRAI TICKET" Yoshiko Tsushima
+LSS/W45-E008	2	"Koini Naritai AQUARIUM" Yoshiko Tsushima
+LSS/W45-E007	4	Yoshiko Tsushima
+LSS/W53-TE05	4	"HAPPY PARTY TRAIN" Ruby Kurosawa
+LSS/W45-E014	4	"Fallen Angel Mode Release" Yoshiko Tsushima
+LSS/W45-E024	4	"Fallen Angel Yohane's Demon Eyes" Yoshiko Tsushima
+LSS/W45-019	4	"Wearing a Smile with Sadness" Yoshiko Tsushima
+LSS/WE27-E01	3	"MIRAI TICKET" Hanamaru Kunikida
+LSS/WE27-E10	2	"Tears of a Fallen Angel" Yoshiko Tsushima
+LSS/W45-E010	3	"Long-awaited New Comer" Yoshiko Tsushima
+LSS/W45-E020	4	"Tokyo? Coordinate" Hanamaru Kunikida
+Events 
+LSS/W45-E029	4	?Little Demon Summoning?
+Climaxes 
+LSS/WE27-E17	4	MIRAI TICKET
+LSS/W45-033	4	Your Favorite Self
