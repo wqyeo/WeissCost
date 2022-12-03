@@ -4,6 +4,7 @@ class Card:
         self.id = id
         self.amount = amount
         self.cost = 0.0
+        self.yuyuteiUrl = ""
 
     def calculate_cost(self) -> float:
         return self.cost * self.amount

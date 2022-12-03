@@ -1,7 +1,10 @@
 from encoredeck_reader import read_deck_file
 from util import is_null_or_whitespace, print_list
+from yuyutei_scraper import debug_call
 
 userInput = input("Enter file name of exported EncoreDeck (.txt):")
+
+debug_call()
 
 while userInput.upper() != "EXIT":
     try:
