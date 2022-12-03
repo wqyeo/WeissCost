@@ -4,9 +4,18 @@ from re import split
 from model.card import Card
 
 from model.deck import Deck
+from util import get_last_index_of
 
 def _is_header(string:str) -> bool:
     return string == "Characters" or string == "Climaxes" or string == "Events"
+
+def _remove_english_from_id(id:str) -> str:
+    # Get last index of '-', and remove all letter 'E' after that.
+    lastIndexHyphen = get_last_index_of(id, "-")
+    cardId = id[lastIndexHyphen:len(id)]
+    cardId = cardId.replace("E", "")
+
+    return id[0:lastIndexHyphen] + cardId
 
 def _parse_file_to_deck(file:TextIOWrapper) -> Deck:
     fileLines = file.readlines()
@@ -34,7 +43,7 @@ def _parse_file_to_deck(file:TextIOWrapper) -> Deck:
         for i in range(2, len(splitCurrent)):
             cardName += splitCurrent[i] + " "
 
-        currentCard = Card(cardName.strip(), splitCurrent[0], int(splitCurrent[1]))
+        currentCard = Card(cardName.strip(), _remove_english_from_id(splitCurrent[0]), int(splitCurrent[1]))
         deckProfile.add_card(currentCard)
     return deckProfile
 
