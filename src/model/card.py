@@ -8,3 +8,6 @@ class Card:
 
     def calculate_cost(self) -> float:
         return self.cost * self.amount
+
+    def print(self) -> None:
+        print(self.name + " (" + self.id + ") " + str(self.cost))
