@@ -1,3 +1,4 @@
+from logger import LogSeverity, log
 from model.card import Card
 
 class Deck:
@@ -31,5 +32,7 @@ class Deck:
                 csvFile.write(card.to_csv_row() + "\n")
             # Final, total price
             csvFile.write(',,,,"' + str(self.calculate_total_cost()) + '",')
+            csvFile.close()
+            print("Cost of Deck Profile has been written to " + filePath + ".")
         except Exception as e:
-            print(e)
+            log(LogSeverity.ERROR, "Failed to write CSV", str(e))

@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from logger import LogSeverity, log
 from model.card import Card
 import re
 import sys
@@ -41,16 +42,17 @@ def scrap_card_price(card: Card) -> bool:
     yuyuteiUrl = _create_link_from_id(card.id)
     rawHtml = ""
     try:
+        log(LogSeverity.LOG, "Get Request Yuyutei", "Sending request to Yuyutei for card price (" + yuyuteiUrl + ").")
         rawHtml = requests.get(yuyuteiUrl).text
-    except:
-        print("Failed to send request to site :: " + yuyuteiUrl)
+    except Exception as e:
+        log(LogSeverity.WARNING, "Yuyutei URL Request Failed", str(e))
         return False
     
     soup = None
     try:
         soup = BeautifulSoup(rawHtml, "html.parser")
-    except:
-        print("Failed to parse website :: " + yuyuteiUrl)
+    except Exception as e:
+        log(LogSeverity.ERROR, "Yuyutei Website Parsing Failed", str(e)) 
         return False
 
     cardUnitRegex = re.compile('.*card_unit.*')
@@ -73,12 +75,15 @@ def scrap_card_price(card: Card) -> bool:
                 # Found a lower price
                 price = float(priceTag)
         except Exception as e:
+            log(LogSeverity.WARNING, "Failed get CardUnit Price", str(e))
             continue
 
     if price >= sys.float_info.max:
+        log(LogSeverity.Log, "No Price Found", "No price found for card (" + card.id + ").") 
         # Could not find price
         return False
     
     card.cost = price
     card.yuyuteiUrl = yuyuteiUrl
+    log(LogSeverity.LOG, "Price Found", "Price found for card (" + card.id + "), " + str(card.cost)  +".\r\n")
     return True
