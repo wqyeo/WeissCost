@@ -11,3 +11,6 @@ class Card:
 
     def print(self) -> None:
         print(self.name + " (" + self.id + ") " + str(self.cost))
+
+    def to_csv_row(self) -> str:
+        return self.id + ',"' + self.name.replace('"', '""') + '",' + str(self.cost) + "," + str(self.amount) + "," + str(self.calculate_cost()) + ',"' + self.yuyuteiUrl + '"'

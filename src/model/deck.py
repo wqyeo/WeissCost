@@ -20,3 +20,16 @@ class Deck:
     def print_deck(self):
         for card in self.cards:
             print(card.name + "(" + card.id + ") :: " + str(card.amount))
+
+    def export(self, filePath:str) -> None:
+        try:
+            csvFile = open(filePath, "w")
+            # Append header
+            csvFile.write("Card_ID,Card_Title,Card_Price,Card_Amount,Total_Price,Yuyutei_URL\n")
+            # Write all cards
+            for card in self.cards:
+                csvFile.write(card.to_csv_row() + "\n")
+            # Final, total price
+            csvFile.write(',,,,"' + str(self.calculate_total_cost()) + '",')
+        except Exception as e:
+            print(e)

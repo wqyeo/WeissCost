@@ -2,7 +2,6 @@ from io import TextIOWrapper
 import os.path
 from re import split
 from model.card import Card
-
 from model.deck import Deck
 from util import get_last_index_of
 
@@ -14,7 +13,6 @@ def _remove_english_from_id(id:str) -> str:
     lastIndexHyphen = get_last_index_of(id, "-")
     cardId = id[lastIndexHyphen:len(id)]
     cardId = cardId.replace("E", "")
-
     return id[0:lastIndexHyphen] + cardId
 
 def _parse_file_to_deck(file:TextIOWrapper) -> Deck:
@@ -58,6 +56,7 @@ def read_deck_file(fileName:str) -> Deck:
     encoreDeckFile = open(fileName, 'r')
     try:
         deckProfile = _parse_file_to_deck(encoreDeckFile)
+        deckProfile.name = fileName.replace(".txt", "")
     except:
         print("The file given is invalid! Ensure that it is downloaded off EncoreDecks.")
         return None
@@ -65,7 +64,4 @@ def read_deck_file(fileName:str) -> Deck:
     if len(deckProfile.cards) == 0:
         print("The given EncoreDeck file might be invalid. Or there is no cards in there.")
         return None
-
-    
-
     return deckProfile
