@@ -7,10 +7,6 @@ import sys
 
 from util import filter_non_digits_for, is_null_or_whitespace
 
-def debug_call() -> None:
-    scrap_card_price(Card("Test", "BD/W54-007", 2))
-    scrap_card_price(Card("Test", "LSS/W45-024", 2))
-
 def _create_link_from_id(id:str) -> str:
     return "https://yuyu-tei.jp/game_ws/sell/sell_price.php?name=" + id + "&rare=&type=&kizu=0"
 
@@ -34,8 +30,10 @@ Scrap for a card's price.
 
 Return True if successful.
 Price will be set on the given card parameter.
+
+Read NOTE below for 'looseFinding' variable
 """
-def scrap_card_price(card: Card) -> bool:
+def scrap_card_price(card: Card, looseFinding = False) -> bool:
     if is_null_or_whitespace(card.id):
         return False
 
@@ -63,8 +61,9 @@ def scrap_card_price(card: Card) -> bool:
     for cardUnit in allCardUnit:
         try:
             # Check if the ID matches first. (Rarity doesn't matter)
+            # NOTE: If looseFinding = True, it matches with 'contains' operation rather than 'equals'
             currentId = cardUnit.find("p", class_="id").get_text()
-            if not _id_matches(card.id, currentId.strip()):
+            if not (_id_matches(card.id, currentId.strip()) or (looseFinding and card.id in currentId)):
                 # Card ID doesn't match, ignore.
                 continue
 
@@ -79,7 +78,7 @@ def scrap_card_price(card: Card) -> bool:
             continue
 
     if price >= sys.float_info.max:
-        log(LogSeverity.Log, "No Price Found", "No price found for card (" + card.id + ").") 
+        log(LogSeverity.WARNING, "No Price Found", "No price found for card (" + card.id + ").") 
         # Could not find price
         return False
     
